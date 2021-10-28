@@ -8,7 +8,7 @@
         "telegram-bot",
         "bin"
     ],
-    "repository": "https://github.com/TgxBotz/Bin-Checker",
+    "repository": "https://github.com/Dileepa-Malshan/szbincheckerbot",
     "website": "t.me/TgxBots",
     "success_url": "https://t.me/TgxBots",
     "env": {
