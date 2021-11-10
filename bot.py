@@ -62,10 +62,10 @@ async def binc(event):
         me = (await event.client.get_me()).username
 
         valid = f"""
-<b>➤ Valid Bin:</b>
+<b>┏━━━━━━━━━━━━━━━━━━:</b>
 
-<b>Bin -</b> <code>{input}</code>
-<b>Status -</b> <code>Valid Bin</code>
+<b>⌬ BIN :</b> <code>{input}</code>
+<b>⌬ STATS -</b> <code>Valid Bin</code>
 <b>Vendor -</b> <code>{vendor}</code>
 <b>Type -</b> <code>{type}</code>
 <b>Level -</b> <code>{level}</code>
