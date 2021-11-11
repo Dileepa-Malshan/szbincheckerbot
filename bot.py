@@ -62,25 +62,22 @@ async def binc(event):
         me = (await event.client.get_me()).username
 
         valid = f"""
-<b>┏━━━━━━━━━━━━━━━━━━:</b>
-
-<b>⌬ BIN :</b> <code>{input}</code>
-<b>⌬ STATS -</b> <code>Valid Bin</code>
-<b>Vendor -</b> <code>{vendor}</code>
-<b>Type -</b> <code>{type}</code>
-<b>Level -</b> <code>{level}</code>
-<b>Bank -</b> <code>{bank}</code>
-<b>Country -</b> <code>{country}</code>
-
-<b>Checked By - @{me}</b>
-<b>User-ID - {event.sender_id}</b>
+<b>┏━━━━━━━━━━━━━━━━━━</b>
+<b>┠⌬BIN -</b> <code>{input}</code>
+<b>┠⌬STATS -</b> <code>Valid Bin</code>
+<b>┠⌬VENDOR -</b> <code>{vendor}</code>
+<b>┠⌬TYPE -</b> <code>{type}</code>
+<b>┠⌬LEVEL -</b> <code>{level}</code>
+<b>┠⌬BANK -</b> <code>{bank}</code>
+<b>┠⌬COUNTRY -</b> <code>{country}</code>
+<b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
     except IndexError:
        await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
     except KeyError:
         me = (await event.client.get_me()).username
-        await xx.edit(f"**➤ Invalid Bin:**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
+        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
 
 print ("Successfully Started")
 bin.run_until_disconnected()
