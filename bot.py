@@ -63,13 +63,13 @@ async def binc(event):
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬BIN -</b> <code>{input}</code>
-<b>┠⌬STATS -</b> <code>Valid Bin</code>
-<b>┠⌬VENDOR -</b> <code>{vendor}</code>
-<b>┠⌬TYPE -</b> <code>{type}</code>
-<b>┠⌬LEVEL -</b> <code>{level}</code>
-<b>┠⌬BANK -</b> <code>{bank}</code>
-<b>┠⌬COUNTRY -</b> <code>{country}</code>
+<b>┠⌬ BIN -</b> <code>{input}</code>
+<b>┠⌬ STATS -</b> <code>Valid Bin</code>
+<b>┠⌬ VENDOR -</b> <code>{vendor}</code>
+<b>┠⌬ TYPE -</b> <code>{type}</code>
+<b>┠⌬ LEVEL -</b> <code>{level}</code>
+<b>┠⌬ BANK -</b> <code>{bank}</code>
+<b>┠⌬ COUNTRY -</b> <code>{country}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
