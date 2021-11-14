@@ -46,40 +46,35 @@ async def help(event):
 """
     await event.reply(text, buttons=[[Button.url("My Developer ", "https://t.me/Dileepa_Malshan")]])
 
-@bin.on(events.NewMessage(pattern="^[!?/]bin"))
+@bin.on(events.NewMessage(pattern="^[!?/]fake"))
 async def binc(event):
     xx = await event.reply("`Processing.....`")
     try:
         input = event.text.split(" ", maxsplit=1)[1]
 
-        url = requests.get(f"https://bins-su-api.now.sh/api/{input}")
-        res = url.json()
-        vendor = res['data']['vendor']
-        type = res['data']['type']
-        level = res['data']['level']
-        bank = res['data']['bank']
-        country = res['data']['country']
-        emoji = res['data']['emoji']
-        me = (await event.client.get_me()).username
+        url = f"https://randomuser.me/api/"
+    response = requests.get(url).json()
+    gender = response["results"][0]["gender"]
+    name = response["results"][0]["name"]
+    location = response["results"][0]["location"]
+    birthday = response["results"][0]["dob"]
+    if gender == "male":
 
-        valid = f"""
-<b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ BIN   :</b> <code>{input}</code>
-<b>┠⌬ STATS :</b> <code>Valid Bin</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
-<b>┠⌬ TYPE  :</b> <code>{type}</code>
-<b>┠⌬ LEVEL :</b> <code>{level}</code>
-<b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ COUNTRY :</b> <code>{country}</code>
-<b>┠⌬ Flag  :</b> <code>{emoji}</code>
-<b>┗━━━━━━━━━━━━━━━━━━</b>
-"""
-        await xx.edit(valid, parse_mode="HTML")
-    except IndexError:
-       await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
-    except KeyError:
-        me = (await event.client.get_me()).username
-        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
-
+        try:
+            message = f"""
+            Name 🙋‍♂️ : {name['title']}.{name['first']} {name['last']}
+            Address 👇
+            Street 🛣 : {location['street']['number']} {location['street']['name']}
+            City 🌆 : {location['city']}
+            State 🚏 : {location['state']}
+            Country 🏜: {location['country']}
+            Post Code 📮 : {location['postcode']}
+            Contact 👇  
+            Email 📧 : {response['results'][0]['email']}
+            Phone 📱 : {response['results'][0]['phone']}
+            Age 👇
+            Birthday 🎂 : {birthday['date']}
+            """
+        
 print ("Successfully Started")
 bin.run_until_disconnected()
