@@ -54,8 +54,8 @@ async def binc(event):
 
         url = requests.get(f"https://lookup.binlist.net/")
         res = url.json()
-        bank = res['data']['bank']
-        brand = res['data']['brand']
+        bank = res['data']['BANK']
+        brand = res['data']['BRAND']
         me = (await event.client.get_me()).username
 
         valid = f"""
