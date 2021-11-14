@@ -64,8 +64,7 @@ async def binc(event):
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ BIN   :</b> <code>{input}</code>
-<b>┠⌬ STATS :</b> <code>Valid Bin {emoji}</code>
+<b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
 <b>┠⌬ BRAND :</b> <code>{vendor}</code>
 <b>┠⌬ TYPE  :</b> <code>{type}</code>
 <b>┠⌬ LEVEL :</b> <code>{level}</code>
