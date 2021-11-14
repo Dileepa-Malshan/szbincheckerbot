@@ -59,12 +59,13 @@ async def binc(event):
         level = res['data']['level']
         bank = res['data']['bank']
         country = res['data']['country']
+        emoji = res['data']['emoji']
         me = (await event.client.get_me()).username
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
 <b>┠⌬ BIN   :</b> <code>{input}</code>
-<b>┠⌬ STATS :</b> <code>Valid Bin ✅</code>
+<b>┠⌬ STATS :</b> <code>Valid Bin {emoji}</code>
 <b>┠⌬ BRAND :</b> <code>{vendor}</code>
 <b>┠⌬ TYPE  :</b> <code>{type}</code>
 <b>┠⌬ LEVEL :</b> <code>{level}</code>
