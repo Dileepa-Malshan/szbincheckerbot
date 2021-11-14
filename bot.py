@@ -2,6 +2,7 @@ import requests
 from telethon import events, Button, TelegramClient
 import os
 import logging
+import telegram
 
 
 logging.basicConfig(level=logging.INFO)
@@ -59,27 +60,29 @@ async def binc(event):
         level = res['data']['level']
         bank = res['data']['bank']
         country = res['data']['country']
-        countryinfo = res['data']['emoji']
+        emoji = res['data']['countryInfo']['emoji']
         me = (await event.client.get_me()).username
-
+        
+        
         valid = f"""
-<b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ BIN   :</b> <code>{input}</code>
-<b>┠⌬ STATS :</b> <code>Valid Bin ✅</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
-<b>┠⌬ TYPE  :</b> <code>{type}</code>
-<b>┠⌬ LEVEL :</b> <code>{level}</code>
-<b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ COUNTRY :</b> <code>{country}</code>
-<b>┠⌬ FLAG  :</b> <code>{emoji}</code>
-<b>┗━━━━━━━━━━━━━━━━━━</b>
-"""
-        await xx.edit(valid, parse_mode="HTML")
+**┏━━━━━━━━━━━━━━━━━━**
+**┠⌬ BIN   :** {input}
+**┠⌬ STATS :** Valid Bin ✅
+**┠⌬ BRAND :** {vendor}
+**┠⌬ TYPE  :** {type}
+**┠⌬ LEVEL :** {level}
+**┠⌬ BANK  :** {bank}
+**┠⌬ COUNTRY :** {country}
+**┠⌬ FLAG  :** {emoji}
+**┗━━━━━━━━━━━━━━━━━━**
+"""  
+        
+        await xx.edit(valid, parse_mode="markdown")
     except IndexError:
        await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
     except KeyError:
         me = (await event.client.get_me()).username
         await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
-
+    
 print ("Successfully Started")
 bin.run_until_disconnected()
