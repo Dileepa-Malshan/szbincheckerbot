@@ -52,9 +52,9 @@ async def binc(event):
     try:
         input = event.text.split(" ", maxsplit=1)[1]
 
-        url = requests.get(f"https://bins-su-api.now.sh/api/{input}")
+        url = requests.get(f"https://randomuser.me/api/1.2/?nat=us")
         res = url.json()
-        vendor = res['data']['vendor']
+        gender = res['data']['gender']
         type = res['data']['type']
         level = res['data']['level']
         bank = res['data']['bank']
