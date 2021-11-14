@@ -46,22 +46,30 @@ async def help(event):
 """
     await event.reply(text, buttons=[[Button.url("My Developer ", "https://t.me/Dileepa_Malshan")]])
 
-@bin.on(events.NewMessage(pattern="^[!?/]bi"))
+@bin.on(events.NewMessage(pattern="^[!?/]bin"))
 async def binc(event):
-    xx = await event.reply("`Processing..... [TESTING]`")
+    xx = await event.reply("`Processing.....`")
     try:
         input = event.text.split(" ", maxsplit=1)[1]
 
-        url = requests.get(f"https://lookup.binlist.net/")
+        url = requests.get(f"https://bins-su-api.now.sh/api/{input}")
         res = url.json()
-        bank = res['data']['BANK']
-        brand = res['data']['BRAND']
+        vendor = res['data']['vendor']
+        type = res['data']['type']
+        level = res['data']['level']
+        bank = res['data']['bank']
+        country = res['data']['country']
         me = (await event.client.get_me()).username
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
+<b>┠⌬ BIN   :</b> <code>{input}</code>
+<b>┠⌬ STATS :</b> <code>Valid Bin ✅</code>
+<b>┠⌬ BRAND :</b> <code>{vendor}</code>
+<b>┠⌬ TYPE  :</b> <code>{type}</code>
+<b>┠⌬ LEVEL :</b> <code>{level}</code>
 <b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ BRAND :</b> <code>{brand}</code>
+<b>┠⌬ COUNTRY :</b> <code>{country}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
