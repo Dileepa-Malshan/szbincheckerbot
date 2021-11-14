@@ -15,4 +15,4 @@ TOKEN - Your Bot Token
 ```
 
 # Deploy To Heroku
-[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/TgxBotz/Bin-Checker)
+[![Deploy To Heroku](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Dileepa-Malshan/szbincheckerbot/)
