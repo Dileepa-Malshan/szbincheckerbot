@@ -1,1 +1,1 @@
-bot: python -m Bot
+bot: python -m User
