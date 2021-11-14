@@ -48,7 +48,7 @@ async def help(event):
 
 @bin.on(events.NewMessage(pattern="^[!?/]bi"))
 async def binc(event):
-    xx = await event.reply("`Processing.....`")
+    xx = await event.reply("`Processing..... [TESTING]`")
     try:
         input = event.text.split(" ", maxsplit=1)[1]
 
