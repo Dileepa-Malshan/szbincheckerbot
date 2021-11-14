@@ -1,83 +1,168 @@
-import requests
-from telethon import events, Button, TelegramClient
-import os
+Skip to content
+Epic-R-R
+/
+Fake-Address-Generator
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Fake-Address-Generator/bot.py
+@SaLaR-sys
+SaLaR-sys run isort
+ 1 contributor
+143 lines (111 sloc)  4.39 KB
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import logging
+from typing import Dict
+
+import requests
+from telegram import ReplyKeyboardMarkup, Update
+from telegram.ext import (CallbackContext, CommandHandler, ConversationHandler,
+                          Filters, MessageHandler, Updater)
+
+# Enable logging
+logging.basicConfig(
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+)
+
+logger = logging.getLogger(__name__)
+
+CHOOSING, TYPING_REPLY, TYPING_CHOICE = range(3)
+
+reply_keyboard = [
+    ["Fake Address Generator", "Github Repo"],
+    ["About", "Support"],
+]
+markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
 
 
-logging.basicConfig(level=logging.INFO)
+def start(update: Update, context: CallbackContext) -> int:
+    update.message.reply_text(
+        "Hi! My name is Doctor Botter. I will hold a more complex conversation with you. "
+        "Why don't you tell me something about yourself?",
+        reply_markup=markup,
+    )
 
-try:
-    API_ID = int(os.environ.get("API_ID", 6))
-    API_HASH = os.environ.get("API_HASH", None)
-    TOKEN = os.environ.get("TOKEN", None)
-except ValueError:
-    print("You forgot to fullfill vars")
-    print("Bot is quitting....")
-    exit()
-except Exception as e:
-    print(f"Error - {str(e)}")
-    print("Bot is quitting.....")
-    exit()
-except ApiIdInvalidError:
-    print("Your API_ID or API_HASH is Invalid.")
-    print("Bot is quitting.")
-    exit()
+    return CHOOSING
 
-bot = TelegramClient('bin', API_ID, API_HASH)
-bin = bot.start(bot_token=TOKEN)
 
-@bin.on(events.NewMessage(pattern="^[!?/]start$"))
-async def start(event):
-    if event.is_group:
-        await event.reply("**Bin-Checker is Alive**")
-        return
-    await event.reply(f"**Heya {event.sender.first_name}**\nIts a Bin-Checker Bot To Check Your Bins Are Valid Or Not.", buttons=[
-    [Button.url("My Developer", "https://t.me/Dileepa_Malshan")]
-    ])
+def fakeaddress(update: Update, context: CallbackContext) -> int:
+    """Send a Fake Address /fake is issued."""
+    url = f"https://randomuser.me/api/"
+    response = requests.get(url).json()
+    gender = response["results"][0]["gender"]
+    name = response["results"][0]["name"]
+    location = response["results"][0]["location"]
+    birthday = response["results"][0]["dob"]
+    if gender == "male":
+        try:
+            message = f"""
+            Name 🙋‍♂️ : {name['title']}.{name['first']} {name['last']}
+            Address 👇
+            Street 🛣 : {location['street']['number']} {location['street']['name']}
+            City 🌆 : {location['city']}
+            State 🚏 : {location['state']}
+            Country 🏜: {location['country']}
+            Post Code 📮 : {location['postcode']}
+            Contact 👇  
+            Email 📧 : {response['results'][0]['email']}
+            Phone 📱 : {response['results'][0]['phone']}
+            Age 👇
+            Birthday 🎂 : {birthday['date']}
+            """
+        except:
+            pass
 
-@bin.on(events.NewMessage(pattern="^[!?/]help$"))
-async def help(event):
-    text = """
-**Welcome to HelpMenu:**
+    elif gender == "female":
+        try:
+            message = f"""
+            Name 🙋‍♀️ : {name['title']}.{name['first']} {name['last']}
+            Address 👇
+            Street 🛣 : {location['street']['number']} {location['street']['name']}
+            City 🌆 : {location['city']}
+            State 🚏 : {location['state']}
+            Country 🏜: {location['country']}
+            Post Code 📮 : {location['postcode']}
+            Contact 👇
+            Email 📧 : {response['results'][0]['email']}
+            Phone 📱 : {response['results'][0]['phone']}
+            Age 👇
+            Birthday 🎂 : {birthday['date']}
+            """
+        except:
+            pass
+    update.message.reply_text(message)
 
-- /start - To Start Me :)
-- /help - To Get Help Menu
-- /bin - To check is your bin valid or not
-"""
-    await event.reply(text, buttons=[[Button.url("My Developer ", "https://t.me/Dileepa_Malshan")]])
 
-@bin.on(events.NewMessage(pattern="^[!?/]bin"))
-async def binc(event):
-    xx = await event.reply("`Processing.....`")
-    try:
-        input = event.text.split(" ", maxsplit=1)[1]
+def githubpage(update: Update, context: CallbackContext) -> int:
+    update.message.reply_text(
+        "You can support me on Github,\nhttps://github.com/Epic-R-R"
+    )
 
-        url = requests.get(f"https://randomuser.me/api/1.2/?nat=us")
-        res = url.json()
-        gender = res['data']['gender']
-        type = res['data']['type']
-        level = res['data']['level']
-        bank = res['data']['bank']
-        country = res['data']['country']
-        emoji = res['data']['countryInfo']['emoji']
-        me = (await event.client.get_me()).username
 
-        valid = f"""
-<b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
-<b>┠⌬ TYPE  :</b> <code>{type}</code>
-<b>┠⌬ LEVEL :</b> <code>{level}</code>
-<b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ COUNTRY :</b> <code>{country}</code>
-<b>┗━━━━━━━━━━━━━━━━━━</b>
-"""
-        await xx.edit(valid, parse_mode="HTML")
-    except IndexError:
-       await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
-    except KeyError:
-        me = (await event.client.get_me()).username
-        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
+def githubrepo(update: Update, context: CallbackContext) -> int:
+    update.message.reply_text(
+        "This is repositorie for fake address generator,\nhttps://github.com/Epic-R-R/Fake-Address-Generator"
+    )
 
-print ("Successfully Started")
-bin.run_until_disconnected()
+
+def About(update: Update, context: CallbackContext) -> int:
+    update.message.reply_text(
+        "Hi there 👋🏻\nWorking hard and fix bug and build tools and software - Epic-R-R"
+    )
+
+
+def main() -> None:
+    # Create the Updater and pass it your bot's token.
+    # Make sure to set use_context=True to use the new context based callbacks
+    # Post version 12 this will no longer be necessary
+    updater = Updater("TOKEN", use_context=True)
+
+    # Get the dispatcher to register handlers
+    dispatcher = updater.dispatcher
+
+    # Add conversation handler with the states CHOOSING, TYPING_CHOICE and TYPING_REPLY
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", start)],
+        states={
+            CHOOSING: [
+                MessageHandler(
+                    Filters.regex("^Fake Address Generator$"),
+                    fakeaddress,
+                ),
+                MessageHandler(Filters.regex("^Support$"), githubpage),
+                MessageHandler(Filters.regex("^Github Repo"), githubrepo),
+                MessageHandler(Filters.regex("^About"), About),
+            ],
+        },
+        fallbacks=[],
+    )
+
+    dispatcher.add_handler(conv_handler)
+
+    updater.start_polling()
+    updater.idle()
+
+
+if __name__ == "__main__":
+    main()
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
