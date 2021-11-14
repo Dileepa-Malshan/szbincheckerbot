@@ -54,7 +54,7 @@ async def binc(event):
 
         url = requests.get(f"https://lookup.binlist.net/")
         res = url.json()
-        vendor = res['data']['vendor']
+        brand = res['data']['brand']
         type = res['data']['type']
         level = res['data']['level']
         bank = res['data']['bank']
@@ -65,7 +65,7 @@ async def binc(event):
 <b>┏━━━━━━━━━━━━━━━━━━</b>
 <b>┠⌬ BIN   :</b> <code>{input}</code>
 <b>┠⌬ STATS :</b> <code>Valid Bin ✅</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
+<b>┠⌬ BRAND :</b> <code>{brand}</code>
 <b>┠⌬ TYPE  :</b> <code>{type}</code>
 <b>┠⌬ LEVEL :</b> <code>{level}</code>
 <b>┠⌬ BANK  :</b> <code>{bank}</code>
