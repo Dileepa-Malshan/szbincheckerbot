@@ -59,6 +59,7 @@ async def binc(event):
         level = res['data']['level']
         bank = res['data']['bank']
         country = res['data']['country']
+        emoji = res['data']['emoji']
         me = (await event.client.get_me()).username
 
         valid = f"""
@@ -70,6 +71,7 @@ async def binc(event):
 <b>┠⌬ LEVEL :</b> <code>{level}</code>
 <b>┠⌬ BANK  :</b> <code>{bank}</code>
 <b>┠⌬ COUNTRY :</b> <code>{country}</code>
+<b>┠⌬ FLAG  :</b> <code>{emoji}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
