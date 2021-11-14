@@ -59,7 +59,7 @@ async def binc(event):
         level = res['data']['level']
         bank = res['data']['bank']
         country = res['data']['country']
-        countryInfo = res['data']['emoji']
+        emoji = res['data']['flag']
         me = (await event.client.get_me()).username
 
         valid = f"""
