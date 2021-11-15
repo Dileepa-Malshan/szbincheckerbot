@@ -1,57 +1,78 @@
 import requests
-import json
+from telethon import events, Button, TelegramClient
+import os
+import logging
 
-servers=json.loads(requests.get('https://single-developers.herokuapp.com/servers').content)
-for server in servers:
-    id=str(server)
-    ip=servers[str(server)]['ip']
-    location=servers[str(server)]['location']
-    emoji=servers[str(server)]['emoji']
-    print(
-f"""◇ Server ID : {id}
-◇ Server Host : {ip}
-◇ Server Location : {emoji} {location} {emoji}
-""")
-serverid=input('Server ID : ')
 
-server=json.loads(requests.get(f'https://single-developers.herokuapp.com/servers?id={serverid}').content)
-status=requests.get(f'https://single-developers.herokuapp.com/servers?status={serverid}').content
-ip=server['ip']
-location=server['location']
-emoji=server['emoji']
-print(
-f"""
-◇ Server ID : {serverid}
-◇ Server Host : {ip}
-◇ Server Location : {emoji} {location} {emoji}
+logging.basicConfig(level=logging.INFO)
 
-◇ Server Status : {str(status)}"""
-)
-
-username=input('User Name : ')
-password=input('Password : ')
-
-ssh=serverid+'$'+username+'$'+password
-ssh_result=requests.get(f'https://single-developers.herokuapp.com/create?ssh={str(ssh)}').content
 try:
-    json_ssh=json.loads(ssh_result)
-    user_name=json_ssh['username']
-    passwd=json_ssh['password']
-    port=json_ssh['port']
-    ex_date=json_ssh['ex_date']
-    login=json_ssh['login']
-    print(
-f"""
-◇ Server Location : {emoji} {location} {emoji}
+    API_ID = int(os.environ.get("API_ID", 6))
+    API_HASH = os.environ.get("API_HASH", None)
+    TOKEN = os.environ.get("TOKEN", None)
+except ValueError:
+    print("You forgot to fullfill vars")
+    print("Bot is quitting....")
+    exit()
+except Exception as e:
+    print(f"Error - {str(e)}")
+    print("Bot is quitting.....")
+    exit()
+except ApiIdInvalidError:
+    print("Your API_ID or API_HASH is Invalid.")
+    print("Bot is quitting.")
+    exit()
 
-◇ Server Host : {ip}
-◇ SSL Port : {port}
-◇ User Name : {user_name}
-◇ Password : {passwd}
-◇ Expire Date : {ex_date}
-◇ Login : {login}
+bot = TelegramClient('bin', API_ID, API_HASH)
+bin = bot.start(bot_token=TOKEN)
 
-<  https://t.me/SingleDevelopers  />"""
-)
-except:
-    print(ssh_result)
+@bin.on(events.NewMessage(pattern="^[!?/]start$"))
+async def start(event):
+    if event.is_group:
+        await event.reply("**Bin-Checker is Alive**")
+        return
+    await event.reply(f"**Heya {event.sender.first_name}**\nIts a Bin-Checker Bot To Check Your Bins Are Valid Or Not.", buttons=[
+    [Button.url("My Developer", "https://t.me/Dileepa_Malshan")]
+    ])
+
+@bin.on(events.NewMessage(pattern="^[!?/]help$"))
+async def help(event):
+    text = """
+**Welcome to HelpMenu:**
+
+- /start - To Start Me :)
+- /help - To Get Help Menu
+- /bin - To check is your bin valid or not
+"""
+    await event.reply(text, buttons=[[Button.url("My Developer ", "https://t.me/Dileepa_Malshan")]])
+
+@bin.on(events.NewMessage(pattern="^[!?/]bin"))
+async def binc(event):
+    xx = await event.reply("`Processing.....`")
+    try:
+        input = event.text.split(" ", maxsplit=1)[1]
+
+        url = requests.get(f"https://randomuser.me/api/1.2/?nat={input}")
+        res = url.json()
+        
+        me = (await event.client.get_me()).username
+
+        valid = f"""
+<b>┏━━━━━━━━━━━━━━━━━━</b>
+<b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
+<b>┠⌬ BRAND :</b> <code>{vendor}</code>
+<b>┠⌬ TYPE  :</b> <code>{type}</code>
+<b>┠⌬ LEVEL :</b> <code>{level}</code>
+<b>┠⌬ BANK  :</b> <code>{bank}</code>
+<b>┠⌬ COUNTRY :</b> <code>{country}</code>
+<b>┗━━━━━━━━━━━━━━━━━━</b>
+"""
+        await xx.edit(valid, parse_mode="HTML")
+    except IndexError:
+       await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
+    except KeyError:
+        me = (await event.client.get_me()).username
+        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
+
+print ("Successfully Started")
+bin.run_until_disconnected()
