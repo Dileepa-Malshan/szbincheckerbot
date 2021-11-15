@@ -54,18 +54,18 @@ async def binc(event):
 
         url = requests.get(f"https://randomuser.me/api/1.2/?nat={input}")
         res = url.json()
-        first = ['results']['name']['first']
-        last =  ['results']['name']['last']
-        gend = ['results']['gender']
-        street = ['results']['location']['street']
-        city = ['results']['location']['city']
-        state = ['results']['location']['state']
-        email = ['results']['email']
-        dob = ['results']['dob']['date']
-        age = ['results']['dob']['age']
-        cell = ['results']['cell']
-        phone = ['results']['phone']
-        ssn = ['results']['id']['value']
+        first = res['results']['name']['first']
+        last =  res['results']['name']['last']
+        gend = res['results']['gender']
+        street = res['results']['location']['street']
+        city = res['results']['location']['city']
+        state = res['results']['location']['state']
+        email = res['results']['email']
+        dob = res['results']['dob']['date']
+        age = res['results']['dob']['age']
+        cell = res['results']['cell']
+        phone = res['results']['phone']
+        ssn = res['results']['id']['value']
         me = (await event.client.get_me()).username
 
         valid = f"""
