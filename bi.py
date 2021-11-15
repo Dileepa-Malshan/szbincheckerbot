@@ -46,7 +46,7 @@ async def help(event):
 """
     await event.reply(text, buttons=[[Button.url("My Developer ", "https://t.me/Dileepa_Malshan")]])
 
-@bin.on(events.NewMessage(pattern="^[!?/]bin"))
+@bin.on(events.NewMessage(pattern="^[!?/]fake"))
 async def binc(event):
     xx = await event.reply("`Processing.....`")
     try:
@@ -55,21 +55,15 @@ async def binc(event):
         url = requests.get(f"https://randomuser.me/api/")
         res = url.json()
         gender = res['results'][0]['gender']
-        name = response['results'][0]['name']
-        level = res['data']['level']
-        bank = res['data']['bank']
-        country = res['data']['country']
-        emoji = res['data']['countryInfo']['emoji']
-        me = (await event.client.get_me()).username
-
+        name = res['results'][0]['name']
+        location = res['results'][0]['location']
+        birthday = res['results'][0]['dob']
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
-<b>┠⌬ TYPE  :</b> <code>{type}</code>
-<b>┠⌬ LEVEL :</b> <code>{level}</code>
-<b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ COUNTRY :</b> <code>{country}</code>
+<b>┠⌬ GENDER :</b> <code>{gender}</code>
+<b>┠⌬ NAME  :</b> <code>{name}</code>
+<b>┠⌬ LOCATION :</b> <code>{location}</code>
+<b>┠⌬ BIRTHDAY  :</b> <code>{dob}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
