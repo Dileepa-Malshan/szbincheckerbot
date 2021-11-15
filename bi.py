@@ -38,7 +38,7 @@ async def start(event):
 @bin.on(events.NewMessage(pattern="^[!?/]help$"))
 async def help(event):
     text = """
-**Welcome to HelpMenu:**
+Welcome to HelpMenu:
 
 - /start - To Start Me :)
 - /help - To Get Help Menu
@@ -48,47 +48,36 @@ async def help(event):
 
 @bin.on(events.NewMessage(pattern="^[!?/]bin"))
 async def binc(event):
-    xx = await event.reply("`Processing.....`")
+    xx = await event.reply("Processing.....")
     try:
         input = event.text.split(" ", maxsplit=1)[1]
 
-        url = requests.get(f"https://randomuser.me/api/1.2/?nat={input}")
+        url = requests.get(f"https://bins-su-api.now.sh/api/{input}")
         res = url.json()
-        first = res['results']['name']['first']
-        last =  res['results']['name']['last']
-        gend = res['results']['gender']
-        street = res['results']['location']['street']
-        city = res['results']['location']['city']
-        state = res['results']['location']['state']
-        email = res['results']['email']
-        dob = res['results']['dob']['date']
-        age = res['results']['dob']['age']
-        cell = res['results']['cell']
-        phone = res['results']['phone']
-        ssn = res['results']['id']['value']
+        vendor = res['data']['vendor']
+        type = res['data']['type']
+        level = res['data']['level']
+        bank = res['data']['bank']
+        country = res['data']['country']
+        emoji = res['data']['countryInfo']['emoji']
         me = (await event.client.get_me()).username
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
-<b>┠⌬ FIRST NAME :</b> <code>{first} {last}</code>
-<b>┠⌬ GENDER :</b> <code>{gend}</code>
-<b>┠⌬ STREET  :</b> <code>{street}</code>
-<b>┠⌬ CITY :</b> <code>{city}</code>
-<b>┠⌬ STATE  :</b> <code>{state}</code>
-<b>┠⌬ BIRTHDAY :</b> <code>{dob}</code>
-<b>┠⌬ AGE :</b> <code>{age}</code>
-<b>┠⌬ SSN:</b> <code>{ssn}</code>
-<b>┠⌬ CELL :</b> <code>{cell}</code>
-<b>┠⌬ PHONE :</b> <code>{phone}</code>
-<b>┠⌬ EMAIL :</b> <code>{email}</code>
+<b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
+<b>┠⌬ BRAND :</b> <code>{vendor}</code>
+<b>┠⌬ TYPE  :</b> <code>{type}</code>
+<b>┠⌬ LEVEL :</b> <code>{level}</code>
+<b>┠⌬ BANK  :</b> <code>{bank}</code>
+<b>┠⌬ COUNTRY :</b> <code>{country}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
     except IndexError:
-       await xx.edit("Plese provide a bin to check\n__`/bin yourbin`__")
+       await xx.edit("Plese provide a bin to check\n__/bin yourbin__")
     except KeyError:
         me = (await event.client.get_me()).username
-        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** `{input}`\n**Status -** `Invalid Bin`\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
+        await xx.edit(f"**❌ INVALID BIN ❌**\n\n**Bin -** {input}\n**Status -** Invalid Bin\n\n**Checked By -** @{me}\n**User-ID - {event.sender_id}**")
 
 print ("Successfully Started")
 bin.run_until_disconnected()
