@@ -55,7 +55,7 @@ async def binc(event):
         url = requests.get(f"https://randomuser.me/api/")
         res = url.json()
         gender = res['results'][0]['gender']
-        type = res['data']['type']
+        name = response['results'][0]['name']
         level = res['data']['level']
         bank = res['data']['bank']
         country = res['data']['country']
