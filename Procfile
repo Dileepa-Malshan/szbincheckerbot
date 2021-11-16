@@ -1,1 +1,1 @@
-bot: python -m bi
+bot: python -m bot
