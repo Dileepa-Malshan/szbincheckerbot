@@ -1,7 +1,11 @@
 FROM python:latest
- 
-WORKDIR /root/szbincheckerbot/
 
-RUN pip install -r /root/szbincheckerbot/requirements.txt
+WORKDIR /binchecker
+COPY . /binchecker
+
+RUN pip install -r requirements.txt
+
+ENTRYPOINT ["python"]
+CMD ["Binchecker/bot.py"]
  
-CMD ["python3","Binchecker/bot.py"]
+
