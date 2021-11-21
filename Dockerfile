@@ -1,7 +1,7 @@
 FROM python:latest
  
-WORKDIR /binchecker
-COPY . /binchecker
+WORKDIR /Binchecker
+COPY . /Binchecker
  
 RUN pip install -r requirements.txt
  
