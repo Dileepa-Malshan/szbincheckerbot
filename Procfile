@@ -1,1 +1,1 @@
-bot: python -m binchecker
+worker: python3 -m Binchecker
