@@ -1,7 +1,7 @@
 FROM python:latest
  
-WORKDIR /szbincheckerbot/Binchecker
-COPY ./Binchecker
+WORKDIR /usr/local/bin
+COPY bot.py .
  
 RUN pip install -r requirements.txt
  
