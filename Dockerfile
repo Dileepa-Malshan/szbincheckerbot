@@ -1,9 +1,8 @@
 FROM python:latest
  
 WORKDIR /Binchecker
-COPY . /Binchecker
+COPY bot.py .
  
 RUN pip install -r requirements.txt
  
-ENTRYPOINT ["python"]
-CMD ["bot.py"]
+CMD ["python3","bot.py"]
