@@ -11,6 +11,7 @@
     "repository": "https://github.com/Dileepa-Malshan/szbincheckerbot",
     "website": "t.me/TgxBots",
     "success_url": "https://t.me/TgxBots",
+    "stack": "container",
     "env": {
         "API_HASH": {
             "description": "Your API HASH from my.telegram.org",
@@ -25,9 +26,10 @@
             "value": ""
         }
     },
-    "buildpacks": [
-        {
-            "url": "heroku/python"
+    "formation": {
+        "ultroid": {
+            "quantity": 1,
+            "size": "free"
         }
-    ]
+    }
 }
