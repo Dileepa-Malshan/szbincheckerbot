@@ -27,7 +27,7 @@
         }
     },
     "formation": {
-        "ultroid": {
+        "szbincheckerbot": {
             "quantity": 1,
             "size": "free"
         }
