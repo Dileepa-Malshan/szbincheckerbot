@@ -55,22 +55,14 @@ async def binc(event):
 
         url = requests.get(f"https://lookup.binlist.net/{input}")
         res = url.json()
-        vendor = res['data']['vendor']
-        type = res['data']['type']
-        level = res['data']['level']
-        bank = res['data']['bank']
-        country = res['data']['country']
-        emoji = res['data']['countryInfo']['emoji']
+        country = res['data'][name]['url']
+        emoji = res['data']['nameric']['emoji']
         me = (await event.client.get_me()).username
 
         valid = f"""
 <b>┏━━━━━━━━━━━━━━━━━━</b>
 <b>┠⌬ BIN   :</b> <code>{input} {emoji}</code>
-<b>┠⌬ BRAND :</b> <code>{vendor}</code>
-<b>┠⌬ TYPE  :</b> <code>{type}</code>
-<b>┠⌬ LEVEL :</b> <code>{level}</code>
-<b>┠⌬ BANK  :</b> <code>{bank}</code>
-<b>┠⌬ COUNTRY :</b> <code>{country}</code>
+<b>┠⌬ URL :</b> <code>{url}</code>
 <b>┗━━━━━━━━━━━━━━━━━━</b>
 """
         await xx.edit(valid, parse_mode="HTML")
